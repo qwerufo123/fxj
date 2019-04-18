@@ -3,6 +3,7 @@ package com.fxj.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fxj.api.BitCoinApi;
+import com.fxj.api.BitCoinJsonRpcLink;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +16,11 @@ public class TestController {
     @Autowired
     private BitCoinApi bitCoinApi;
 
+    @Autowired
+    private BitCoinJsonRpcLink bitCoinJsonRpcLink;
+
     @GetMapping("/test")
-    private String test(){
+    private String test() throws Throwable {
         //查询块链处理的各种状态信息
         JSONObject chainInfo = bitCoinApi.getChainInfo();
         System.out.println("查询块链处理的各种状态信息"+chainInfo);
@@ -44,6 +48,10 @@ public class TestController {
         //查询交易可使用事务
         JSONObject mempoolContents = bitCoinApi.getMempoolContents();
         System.out.println("查询交易可使用事务"+mempoolContents);
+
+        //根据块高度查询块hash
+        String blockHashByHeight = bitCoinJsonRpcLink.getBlockHashByHeight(1489456);
+        System.out.println("根据块高度查询块hash"+blockHashByHeight);
 
         return "111";
     }
