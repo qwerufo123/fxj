@@ -37,13 +37,13 @@
       #{totalInput,jdbcType=DOUBLE}, #{totalOutput,jdbcType=DOUBLE}, #{fees,jdbcType=DOUBLE}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.fxj.bean.Transaction">
+  <insert id="insertSelective">
     insert into transaction
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="txid != null">
         txid,
       </if>
-      <if test="txhash != null">
+      <if test="hash != null">
         txhash,
       </if>
       <if test="blockhash != null">
@@ -72,8 +72,8 @@
       <if test="txid != null">
         #{txid,jdbcType=CHAR},
       </if>
-      <if test="txhash != null">
-        #{txhash,jdbcType=CHAR},
+      <if test="hash != null">
+        #{hash,jdbcType=CHAR},
       </if>
       <if test="blockhash != null">
         #{blockhash,jdbcType=CHAR},
@@ -140,4 +140,9 @@
       fees = #{fees,jdbcType=DOUBLE}
     where txid = #{txid,jdbcType=CHAR}
   </update>
+
+  <update id="truncate">
+    truncate `transaction`;
+  </update>
+
 </mapper>

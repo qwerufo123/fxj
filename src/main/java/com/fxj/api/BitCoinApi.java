@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface BitCoinApi {
 
     /**
-     * 查询块链处理的各种状态信息
+     * 查询块链信息状态
      * @return
      */
     @GetMapping("/rest/chaininfo.json")

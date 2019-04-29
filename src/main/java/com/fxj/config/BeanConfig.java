@@ -1,6 +1,14 @@
 package com.fxj.config;
 
+import com.alibaba.fastjson.JSONObject;
+import com.fxj.api.BitCoinApi;
+import com.fxj.api.BitCoinJsonRpcLink;
+import com.fxj.mapper.BlockMapper;
+import com.fxj.mapper.TransactionMapper;
+import com.fxj.service.SynchronizationDataService;
+import com.fxj.service.impl.SynchronizationDataImpl;
 import com.googlecode.jsonrpc4j.JsonRpcHttpClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
@@ -29,6 +37,12 @@ public class BeanConfig {
     @Value("${bitCoin.url}")
     private String url;
 
+    @Autowired
+    private BitCoinApi bitCoinApi;
+
+    @Autowired
+    private BitCoinJsonRpcLink bitCoinJsonRpcLink;
+
     /**
      * 创建JsonRpcHttpClient类
      * @return
@@ -42,6 +56,23 @@ public class BeanConfig {
         HashMap<String, String> map = new HashMap<>();
         map.put("Authorization",autoString);
         return new JsonRpcHttpClient(new URL(url),map);
+    }
+
+    @Autowired
+    private BlockMapper blockMapper;
+
+    @Autowired
+    private TransactionMapper transactionMapper;
+
+    @Bean
+    private Runnable newRunable() throws Throwable {
+        blockMapper.truncate();
+        transactionMapper.truncate();
+        JSONObject chainInfo = bitCoinApi.getChainInfo();
+        int height = (int) chainInfo.get("blocks");
+        SynchronizationDataImpl synchronizationData = new SynchronizationDataImpl(bitCoinApi, bitCoinJsonRpcLink, blockMapper, transactionMapper, height);
+//        synchronizationData.start();
+        return null;
     }
 
 }

@@ -43,82 +43,66 @@
       #{outputTotal,jdbcType=DOUBLE}, #{transactionFees,jdbcType=DOUBLE}, #{merkleRoot,jdbcType=CHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.fxj.bean.Block">
+  <insert id="insertSelective">
     insert into block
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="blockhash != null">
+      <if test="hash != null">
         blockhash,
       </if>
-      <if test="blockchainId != null">
         blockchain_id,
-      </if>
       <if test="height != null">
         height,
       </if>
       <if test="time != null">
         time,
       </if>
-      <if test="txSize != null">
+      <if test="nTx != null">
         tx_size,
       </if>
-      <if test="sizeOnDisk != null">
+      <if test="size != null">
         size_on_disk,
       </if>
       <if test="difficulty != null">
         difficulty,
       </if>
-      <if test="prevBlockhash != null">
+      <if test="previousblockhash != null">
         prev_blockhash,
       </if>
-      <if test="nextBlockhash != null">
+      <if test="nextblockhash != null">
         next_blockhash,
       </if>
-      <if test="outputTotal != null">
-        output_total,
-      </if>
-      <if test="transactionFees != null">
-        transaction_fees,
-      </if>
-      <if test="merkleRoot != null">
+      <if test="merkleroot != null">
         merkle_root,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="blockhash != null">
-        #{blockhash,jdbcType=CHAR},
+      <if test="hash != null">
+        #{hash,jdbcType=CHAR},
       </if>
-      <if test="blockchainId != null">
-        #{blockchainId,jdbcType=INTEGER},
-      </if>
+        1,
       <if test="height != null">
         #{height,jdbcType=INTEGER},
       </if>
       <if test="time != null">
-        #{time,jdbcType=TIMESTAMP},
+        #{time},
       </if>
-      <if test="txSize != null">
-        #{txSize,jdbcType=INTEGER},
+      <if test="nTx != null">
+        #{nTx,jdbcType=INTEGER},
       </if>
-      <if test="sizeOnDisk != null">
-        #{sizeOnDisk,jdbcType=BIGINT},
+      <if test="size != null">
+        #{size,jdbcType=BIGINT},
       </if>
       <if test="difficulty != null">
         #{difficulty,jdbcType=DOUBLE},
       </if>
-      <if test="prevBlockhash != null">
-        #{prevBlockhash,jdbcType=CHAR},
+      <if test="previousblockhash != null">
+        #{previousblockhash,jdbcType=CHAR},
       </if>
-      <if test="nextBlockhash != null">
-        #{nextBlockhash,jdbcType=CHAR},
+      <if test="nextblockhash != null">
+        #{nextblockhash,jdbcType=CHAR},
       </if>
-      <if test="outputTotal != null">
-        #{outputTotal,jdbcType=DOUBLE},
-      </if>
-      <if test="transactionFees != null">
-        #{transactionFees,jdbcType=DOUBLE},
-      </if>
-      <if test="merkleRoot != null">
-        #{merkleRoot,jdbcType=CHAR},
+      <if test="merkleroot != null">
+        #{merkleroot,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -176,4 +160,9 @@
       merkle_root = #{merkleRoot,jdbcType=CHAR}
     where blockhash = #{blockhash,jdbcType=CHAR}
   </update>
+
+  <update id="truncate">
+    truncate block;
+  </update>
+
 </mapper>
