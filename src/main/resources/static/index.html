@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/elementui.css">
+    <!-- <link rel="stylesheet" type="text/css" href="css/index3-min.css"/> -->
+    <style>
+        * {
+            margin: 0 auto;
+            padding: 0 auto;
+        }
+    </style>
+    <title>Demo</title>
+</head>
+
+<body style="margin:0 auto;">
+    <div id="head" style="text-align:center;margin: 50px 0;">
+        <el-input v-model="input" placeholder="请输入内容" style="width:40%;"></el-input>
+        <el-button type="primary" @click="show">查询</el-button><br>
+        <span id="temp" style="color:red;"></span>
+    </div>
+    <div id="body" style="width: 80%">
+        <el-button id="block" type="primary" @click="block" style="background:red">块</el-button>
+        <el-button id="tx" type="primary" @click="tx">交易</el-button>
+        <template>
+            <el-table id="blockTable" :data="tableData" style="width: 100%">
+                <el-table-column label="高度" width="100">
+                    <template slot-scope="scope">
+                        <el-button type="text" size="small" @click="height(scope.row.height)">{{scope.row.height}}</el-button>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="time" label="时间">
+                </el-table-column>
+                <el-table-column prop="txSize" label="交易数量" width="100">
+                </el-table-column>
+                <el-table-column label="根哈希" prop="merkleRoot" width="600">
+                    <!-- <template slot-scope="scope"  >
+                        <el-button type="text" size="small" @click="merkleRoot(scope.row.merkleRoot)">{{scope.row.merkleRoot}}</el-button>
+                    </template> -->
+                </el-table-column>
+                <el-table-column prop="sizeOnDisk" label="大小" width="150">
+                </el-table-column>
+            </el-table>
+        </template>
+        <template>
+            <el-table id="txTable" :data="tableData" style="width: 100%;display: none">
+                <el-table-column label="交易哈希" width="600">
+                        <template slot-scope="scope">
+                                <el-button type="text" size="small" @click="txhash(scope.row.txhash)">{{scope.row.txhash}}</el-button>
+                            </template>
+                </el-table-column>
+                <el-table-column prop="time" label="时间">
+                </el-table-column>
+                <el-table-column prop="fees" label="总计" width="200">
+                </el-table-column>
+                <el-table-column prop="price" label="价值" width="100">
+                </el-table-column>
+            </el-table>
+        </template>
+    </div>
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/axios.min.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/elementui.js"></script>
+    <script type="text/javascript" src="myjs/index.js"></script>
+
+</body>
+
+</html>

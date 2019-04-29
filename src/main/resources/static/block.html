@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/elementui.css">
+    <!-- <link rel="stylesheet" type="text/css" href="css/index3-min.css"/> -->
+    <style>
+        * {
+            margin: 0 auto;
+            padding: 0 auto;
+        }
+
+        .key {
+            font-weight: bold;
+            float: left;
+        }
+
+        .value {
+            float: right;
+        }
+
+        #txLeft {
+            width: 45%;
+            float: left;
+        }
+
+        #txRight {
+            width: 45%;
+            float: right;
+        }
+    </style>
+    <title>Demo</title>
+</head>
+
+<body>
+    <div id="app">
+        <div style="text-align:center;margin:50px 0;overflow: hidden;">
+            <el-button type="text" id="lastBlock" v-if="blockheight>minheight" size="small" @click="toLastBlock"
+                style="width:20%;float: left">上一个块
+            </el-button>
+            <h2 style="display:inline-block">{{blockheight}}</h2>
+            <el-button type="text" id="nextBlock" v-if="blockheight<=maxheight " size="small" @click="toNextBlock"
+                style="width:20%;float: right">下一个块
+            </el-button>
+        </div>
+        <div style="width:80%;overflow: hidden">
+            <h4 style="margin:20px 0">块信息</h4>
+            <span class="key">块哈希</span><span class="value">{{block.hash}}</span>
+            <hr style="margin:50px 0 10px 0">
+            <span class="key">Merkle Root</span><span class="value">{{block.merkleroot}}</span>
+            <hr style="margin:50px 0 10px 0">
+            <div id="txLeft">
+                <span class="key">Number of Transactions</span><span class="value">{{block.nTx}}</span>
+                <hr style="margin:40px 0 10px 0">
+                <span class="key">Timestamp</span><span class="value">{{block.time}}</span>
+                <hr style="margin:50px 0 10px 0">
+                <span class="key">Miner</span><span class="value">{{block.miner}}</span>
+                <hr style="margin:50px 0 10px 0">
+                <span class="key">Height</span><span class="value">{{block.height}}</span>
+                <hr style="margin:50px 0 10px 0">
+                <span class="key">Version</span><span class="value">{{block.version}}</span>
+                <hr style="margin:50px 0 10px 0">
+            </div>
+            <div id="txRight">
+                <span class="key">Difficulty</span><span class="value">{{block.difficulty}}</span>
+                <hr style="margin:40px 0 10px 0">
+                <span class="key">Bits</span><span class="value">{{block.bits}}</span>
+                <hr style="margin:50px 0 10px 0">
+                <span class="key">Size</span><span class="value">{{block.size}}</span>
+                <hr style="margin:50px 0 10px 0">
+                <span class="key">Nonce</span><span class="value">{{block.nonce}}</span>
+                <hr style="margin:50px 0 10px 0">
+            </div>
+        </div>
+        <div style="width:80%">
+            <template>
+                <el-table id="tx" :data="tx" style="width: 100%; ">
+                    <el-table-column prop="locktime" label="时间" width="400">
+                    </el-table-column>
+                    <el-table-column label="哈希" width="600">
+                        <template slot-scope="scope">
+                            <el-button type="text" size="medium" @click="txhash(scope.row.txid)">{{scope.row.txid}}
+                        </el-button>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="version" label="状态" width="100">
+                    </el-table-column>
+                    <el-table-column prop="vout[0].value" label="数量" width="200">
+                    </el-table-column>
+                </el-table>
+            </template>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/axios.min.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/elementui.js"></script>
+    <script type="text/javascript" src="myjs/block.js">
+
+    </script>
+
+</body>
+
+</html>

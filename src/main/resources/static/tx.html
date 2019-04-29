@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/elementui.css">
+    <!-- <link rel="stylesheet" type="text/css" href="css/index3-min.css"/> -->
+    <title>Demo</title>
+    <style>
+        * {
+            margin: 0 auto;
+            padding: 0 auto;
+        }
+
+        .body {
+            float: left
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h2 style="text-align:center;margin:20px 0">交易信息</h2>
+        <div
+            style="width: 80%;border-top: 1px solid gray ;border-bottom: 1px solid gray;background: azure;padding:0 10px">
+            <el-button type="text" size="small" @click="txHash">{{txhash}}</el-button>
+        </div>
+        <div style="width:80%;overflow: hidden;">
+            <div class="body" id="vin" style="width: 40%">
+                <el-button type="text" style="margin:0" size="medium" v-for="vin in tx.vin" v-bind:key="vin.txid" @click="toVin(vin.txid)">{{vin.txid}}</el-button>
+            </div>
+            <div class="body" id="center" style="width: 5%;text-align: center">
+                <img src="img/1.png" alt="">
+            </div>
+            <div class="body" id="vout" style="width: 40%">
+                <el-button type="text" style="margin:0" size="medium" v-for="vout in tx.vout" v-bind:key="vout.scriptPubKey.hex" @click="toVout(vout.scriptPubKey.hex)">{{vout.scriptPubKey.hex}}</el-button>
+            </div>
+            <div class="body" id="bit" style="width: 15%;text-align: right">
+                <p class="bit" v-for="vout in tx.vout" style="line-height: 36px;">{{vout.value}}bit</p>
+                <p>{{setSumBit}}bit</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/axios.min.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/elementui.js"></script>
+    <script type="text/javascript" src="myjs/tx.js"></script>
+
+</body>
+
+</html>
