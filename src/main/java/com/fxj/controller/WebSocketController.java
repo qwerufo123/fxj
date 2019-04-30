@@ -28,23 +28,24 @@ public class WebSocketController extends TextWebSocketHandler {
     @Autowired
     private BitCoinApi bitCoinApi;
 
+    private BlockWebSocket blockWebSocket = null;
+    private TxWebSocket txWebSocket = null;
+
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         String payload = message.getPayload();
-        BlockWebSocket blockWebSocket = null;
-        TxWebSocket txWebSocket = null;
         if (payload.equals("block")){
-//            blockWebSocket = new BlockWebSocket(bitCoinJsonRpcLink, bitCoinApi, session);
-//            blockWebSocket.start();
-//            if (txWebSocket!=null){
-//                txWebSocket.interrupt();
-//            }
+            blockWebSocket = new BlockWebSocket(bitCoinJsonRpcLink, bitCoinApi, session);
+            blockWebSocket.start();
+            if (txWebSocket!=null){
+                txWebSocket.interrupt();
+            }
         }else if(payload.equals("tx")){
-//            txWebSocket = new TxWebSocket(bitCoinJsonRpcLink, bitCoinApi, session);
-//            txWebSocket.start();
-//            if (blockWebSocket!=null){
-//                blockWebSocket.interrupt();
-//            }
+            txWebSocket = new TxWebSocket(bitCoinJsonRpcLink, bitCoinApi, session);
+            txWebSocket.start();
+            if (blockWebSocket!=null){
+                blockWebSocket.interrupt();
+            }
         }else{
             throw new Exception("标记有误");
         }

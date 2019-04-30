@@ -40,7 +40,7 @@ var body = new Vue({
     },
     mounted() {
         this.getIndexData();
-        // this.webSocket();
+        this.webSocket();
     },
     methods: {
         getIndexData() {
